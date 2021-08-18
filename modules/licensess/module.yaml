@@ -1,0 +1,10 @@
+schema_version: 1
+
+name: licensess
+version: 1.0
+description: "Add & Generate licenses directory"
+  
+execute:
+- script: configure.sh
+- script: backward_compatibility.sh
+#- script: license.sh

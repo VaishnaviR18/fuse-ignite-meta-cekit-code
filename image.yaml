@@ -1,0 +1,50 @@
+schema_version: 1
+
+name: "fuse7/fuse-online-meta-rhel8"
+description: "Manages metadata and validation for Fuse Online connectors."
+version: "1.9"
+from: "registry-proxy.engineering.redhat.com/rh-osbs/fuse7-fuse-java-openshift-rhel8:1.9"
+
+labels:
+- name: "com.redhat.component"
+  value: "fuse-ignite-meta-rhel-8-container"
+- name: "maintainer"
+  value: "Otavio Piske <opiske@redhat.com>"   
+- name: "io.k8s.description"
+  value: "Manages metadata and validation for Fuse Online connectors."
+- name: "io.k8s.display-name"
+  value: "Red Hat Fuse Online - Validation Service"
+- name: "io.openshift.tags"
+  value: "fuse"
+
+envs:
+- name: JAVA_APP_DIR
+  value: /deployments
+- name: SYNDESIS_VERSION
+  value: 1.12.0.fuse-790010-redhat-00001
+
+ports:
+    - value: 8080
+    - value: 8778
+    - value: 9779
+      expose: true     
+
+modules:
+    repositories:
+      - name: modules
+        path: modules
+    install:
+      - name: licensess
+
+artifacts:
+- name: "meta-syndesis"
+  sha512: "57014d622cbc704ed7759afbedba4e7b1f68d8a0cfa48610456fe1eee09613c9123262ae093d67ba9e01226174d2498e8f8b31a53bb19aff6be8c6a8e0e3a4dd"
+  url: "http://indy.psi.redhat.com/api/content/maven/group/redhat-builds/io/syndesis/meta/meta/1.12.0.fuse-790010-redhat-00001/meta-1.12.0.fuse-790010-redhat-00001.jar"
+  dest: "/deployments"
+  target: "runtime.jar"
+- name: "run-env.sh"
+  path: "run-env.sh"
+  dest: "/deployments"  
+
+run:
+  user: 185
